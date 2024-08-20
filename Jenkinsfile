@@ -6,6 +6,12 @@ pipeline{
                 git url: 'https://github.com/Abhi9-g/cicdprojectrepo.git', branch: 'main'
             }
         }
+        stage('Cleanup stage'){
+            steps{
+                sh 'docker rm -f $(docker ps -aq)'
+                sh 'docker rmi -f myimage'
+            }
+        }
         stage('Build Docker Image stage'){
             steps{
                 sh 'docker build -t myimage .'
