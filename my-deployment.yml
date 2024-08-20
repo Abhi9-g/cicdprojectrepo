@@ -17,7 +17,7 @@ spec:
                 app: my-app
         spec:
             containers:
-            - image: abhi9d/myimage
+            - image: abhi9d/myimage:latest
               name: mycontainer
               ports:
               - containerPort: 8501

@@ -14,7 +14,7 @@ pipeline{
         }*/
         stage('Build Docker Image stage'){
             steps{
-                sh 'docker build -t myimage .'
+                sh 'docker build -t myimage:latest .'
             }
         }
         stage('Push image to DockerHub stage'){
@@ -23,8 +23,8 @@ pipeline{
                 usernameVariable:'DOCKER_USERNAME',passwordVariable:'DOCKER_PASSWORD')])
                 {
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                    sh 'docker tag myimage $DOCKER_USERNAME/myimage'
-                    sh 'docker push $DOCKER_USERNAME/myimage'
+                    sh 'docker tag myimage:latest $DOCKER_USERNAME/myimage:latest'
+                    sh 'docker push $DOCKER_USERNAME/myimage:latest'
                 }
             }
         }
