@@ -22,9 +22,14 @@ pipeline{
                 }
             }
         }
-        stage("Run Docker Container"){
+        /*stage("Run Docker Container"){
             steps{
                 sh 'docker run -d -p 8502:8501 myimage'
+            }
+        }*/
+        stage("Kubernetes deployment stage"){
+            steps{
+                sh 'kubectl apply -f my-deployment.yml'
             }
         }
     }
