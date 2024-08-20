@@ -1,2 +1,2 @@
 import streamlit as st
-st.write("Deployment using CICD 1!")
+st.write("Deployment using CICD 2!")
