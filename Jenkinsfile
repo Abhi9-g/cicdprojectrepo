@@ -24,7 +24,7 @@ pipeline{
         }
         stage("Run Docker Container"){
             steps{
-                sh 'docker run -d -p 8501:8501 myimage'
+                sh 'docker run -d -p 8502:8501 myimage'
             }
         }
     }
