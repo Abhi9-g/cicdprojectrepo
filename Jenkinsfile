@@ -1,9 +1,5 @@
 pipeline{
-    agent{
-        node{
-            label 'JenkinsSlaveNodeLabel'
-        }
-    }
+    agent any
     stages{
         stage('Checkout code stage'){
             steps{
@@ -17,13 +13,18 @@ pipeline{
         }
         stage('Push image to DockerHub stage'){
             steps{
-                sh 'docker tag myimage abhi9d/myimage'
-                sh 'docker push abhi9d/myimage'
+                withCredentials([usernamePassword(credentialsId:'dockerhub-credentials',
+                usernameVariable:'DOCKER_USERNAME',passwordVariable:'DOCKER_PASSWORD')])
+                {
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    sh 'docker tag myimage $DOCKER_USERNAME/myimage'
+                    sh 'docker push a$DOCKER_USERNAME/myimage'
+                }
             }
         }
-        stage('Deploy to kubernetes'){
+        stage("Run Docker Container"){
             steps{
-                sh 'kubectl apply -f my-deployment.yml'
+                sh 'docker run -d -p 8501:8501 myimage'
             }
         }
     }
